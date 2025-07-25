@@ -1,23 +1,37 @@
 package dto;
 
-public class UserDto {
+
+public class UserDto extends CommonField{
+    private int u_id;
     private String id;
     private String password;
     private String name;
     private String phoneNumber;
     private String recharge;
     private String cardNumber;
+   
 
     @Override
     public String toString() {
         return "UserDto{" +
+                "u_id='" + u_id + '\'' +
                 "id='" + id + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", recharge='" + recharge + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +
+                ", signUpDate='" + getSignUpDate() +
                 '}';
+    }
+
+
+    public int getU_id() {
+        return u_id;
+    }
+
+    public void setU_id(int u_id) {
+        this.u_id = u_id;
     }
 
     public String getId() {

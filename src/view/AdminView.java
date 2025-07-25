@@ -4,6 +4,8 @@ import service.AdminService;
 
 import java.util.Scanner;
 
+//adminservice에서 진행
+
 public class AdminView {
     AdminService adminService = new AdminService();
     public static Scanner sc = new Scanner(System.in);

@@ -23,7 +23,6 @@ public class UserView {
 
         boolean idOK = true;
         String id = "";
-
         while (idOK) {
             try {
                 System.out.print("아이디를 입력하세요: ");
@@ -35,15 +34,25 @@ public class UserView {
             }
         }
 
+        boolean passwardOK = true;
+        String passward = "";
+        while (passwardOK) {
+            try {
+                System.out.println("비밀번호를 입력하세요: ");
+                passward = sc.next();
+                validation.passwordCheck(passward);
+                passwardOK = false;
+            } catch (MyException e) {
+                System.out.println(e.getMessage());
+            }
+        }
 
 
-
-        //한글 이름 입력 처리 확인
         boolean nameOK = true;
         String name="";
         while (nameOK) {
             try {
-                System.out.println("이름을 입력하세요");
+                System.out.println("이름을 입력하세요: ");
                 name = sc.next();
                 validation.nameCheck(name);
                 nameOK = false;
@@ -52,27 +61,12 @@ public class UserView {
             }
         }
 
-        boolean ageOK = true;
-        int age = -1;
-        while (ageOK) {
-            try {
-                System.out.println("나이를 입력하세요");
-                age = sc.nextInt();
-                validation.ageCheck(age);
-                ageOK = false;
-            } catch (MyException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-
-
         boolean phoneOK = true;
         String phone = "";
 
         while (phoneOK) {
             try {
-                System.out.println("전화번호를 입력하세요");
+                System.out.println("전화번호를 입력하세요: ");
                 phone = sc.next();
                 validation.phoneNumberCheck(phone);
                 phoneOK = false;
@@ -81,6 +75,32 @@ public class UserView {
             }
         }
 
+        boolean cardOK = true;
+        String cardNumber = "";
+        while (cardOK) {
+            try {
+                System.out.println("카드번호를 입력하세요(xxxx-xxxx-xxxx-xxxx):");
+                cardNumber = sc.next();
+                validation.cardNumberCheck(cardNumber);
+                cardOK = false;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+
+        boolean rechargeOK = true;
+        String recharge = "";
+        while (rechargeOK) {
+            try {
+                System.out.println("카드에 충전 할 금액을 입력하세요(1000원 단위로 가능):");
+                recharge = sc.next();
+                validation.rechargeCheck(recharge);
+                rechargeOK = false;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
 
 
 
@@ -91,8 +111,9 @@ public class UserView {
         dto.setId(id);
         dto.setPassword(passward);
         dto.setName(name);
-        dto.setCardNumber(cardNumber);
         dto.setPhoneNumber(phone);
+        dto.setCardNumber(cardNumber);
+        dto.setRecharge(recharge);
 
 
         //서비스에 insert 요청하기
@@ -103,7 +124,11 @@ public class UserView {
         }else {
             System.out.println("입력되지 않았습니다");
         }
+
+
     }
+
+
 
 
     public boolean signIn() {
@@ -126,3 +151,5 @@ public class UserView {
         System.out.println("메뉴선택페이지");
     }
 }
+
+

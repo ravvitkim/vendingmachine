@@ -20,7 +20,7 @@ public class MachineMain {
                 case 0 :
                     System.out.println("관리자 비밀번호 입력 : ");
                     String password = sc.next();
-                    if (password.equals("1004")) {
+                    if (password.equals("1111")) {
                         adminView.adminScreen();
                     } else {
                         continue;

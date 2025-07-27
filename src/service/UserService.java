@@ -38,7 +38,7 @@ public class UserService implements CRUDInterface {
         return 0;
     }
 
-    // 🔄 회원 정보 전체 수정
+    //  회원 정보 전체 수정
     @Override
     public int updateData(UserDto dto) {
         int result = 0;
@@ -64,8 +64,12 @@ public class UserService implements CRUDInterface {
     }
 
     public UserDto findByCardNumber(String cardNumber) {
+        Connection conn = DBconn.getConnection();
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+
         try {
-            sql = "SELECT * FROM user WHERE cardNumber = ? AND status = 1";
+            String sql = "SELECT * FROM user WHERE cardNumber = ? AND status = 1";
             psmt = conn.prepareStatement(sql);
             psmt.setString(1, cardNumber);
             rs = psmt.executeQuery();
@@ -80,19 +84,21 @@ public class UserService implements CRUDInterface {
                 dto.setCardNumber(rs.getString("cardNumber"));
                 dto.setRecharge(rs.getInt("recharge"));
                 dto.setStatus(rs.getInt("status"));
-                dto.setSignUpDate(rs.getTimestamp("signUpDate").toLocalDateTime());
                 return dto;
             }
 
         } catch (SQLException e) {
             System.out.println("카드 조회 중 오류 발생: " + e.getMessage());
         } finally {
-            close();
+            DBconn.close(rs);
+            DBconn.close(psmt);
+            // DBconn.close(conn); // 커넥션은 닫지 않는다. 재사용 위해서
         }
         return null;
     }
 
-    // ✅ 카드 충전 전용 메서드 (recharge 컬럼만 갱신)
+
+    //  카드 충전 전용 메서드 (recharge 컬럼만 갱신)
     public int updateRecharge(UserDto dto) {
         int result = 0;
         try {
@@ -210,4 +216,61 @@ public class UserService implements CRUDInterface {
         }
         return dtoList;
     }
+    public boolean isCardNumberExist(String cardNumber) {
+        boolean exists = false;
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT 1 FROM user WHERE cardNumber = ?";
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, cardNumber);
+            rs = psmt.executeQuery();
+
+            if (rs.next()) {
+                exists = true; // 결과가 있다면 카드번호가 존재함
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBconn.close(rs);
+            DBconn.close(psmt);
+        }
+
+        return exists;
+    }
+    public UserDto findByIdAndPassword(String id, String password) {
+        UserDto dto = null;
+        PreparedStatement psmt = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT * FROM user WHERE id = ? AND password = ?";
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1, id);
+            psmt.setString(2, password);
+            rs = psmt.executeQuery();
+
+            if (rs.next()) {
+                dto = new UserDto();
+                dto.setId(rs.getString("id"));
+                dto.setPassword(rs.getString("password"));
+                dto.setName(rs.getString("name"));
+                dto.setPhoneNumber(rs.getString("phoneNumber"));
+                dto.setCardNumber(rs.getString("cardNumber"));
+                dto.setRecharge(rs.getInt("recharge"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBconn.close(rs);
+            DBconn.close(psmt);
+        }
+
+        return dto;
+    }
+
+
 }

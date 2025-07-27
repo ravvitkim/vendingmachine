@@ -11,7 +11,7 @@ public class AdminView {
     public static Scanner sc = new Scanner(System.in);
     public void adminScreen(){
         while (true) {
-            System.out.println("1.자판기관리 2.회원관리 3.판매관리");
+            System.out.println("1.자판기관리 2.회원관리 3.판매관리 0.종료");
             int choice = sc.nextInt();
             switch (choice){
                 case 1 :
@@ -19,8 +19,12 @@ public class AdminView {
                     break;
                 case 2:
                     adminService.userMg();
+                    break;
                 case 3:
                     adminService.saleMg();
+                    break;
+                case 0 :
+                    return;
             }
         }
     }

@@ -15,7 +15,6 @@ public class UserView {
     private Scanner sc = new Scanner(System.in);
     private UserService userService = new UserService();
     private InputValidation validation = new InputValidation();
-    private List<UserDto> userList = new ArrayList<>();
     private Random rand = new Random();
 
     // 회원가입 메서드
@@ -106,7 +105,6 @@ public class UserView {
         dto.setCardNumber(cardNumber);
         dto.setRecharge(recharge);
 
-        userList.add(dto);
 
         int result = userService.insertData(dto);
         if (result > 0) {
@@ -118,13 +116,9 @@ public class UserView {
 
     // 카드번호 중복 확인
     private boolean isCardNumberTaken(String cardNumber) {
-        for (UserDto user : userList) {
-            if (cardNumber.equals(user.getCardNumber())) {
-                return true;
-            }
-        }
-        return false;
+        return userService.isCardNumberExist(cardNumber);
     }
+
 
     // 카드번호 랜덤 생성
     private String randomCardNumber() {
@@ -145,14 +139,14 @@ public class UserView {
         System.out.print("PW : ");
         String pw = sc.next();
 
-        for (UserDto user : userList) {
-            if (user.getId().equals(id) && user.getPassword().equals(pw)) {
-                System.out.println("로그인 성공!");
-                return true;
-            }
+        UserDto user = userService.findByIdAndPassword(id, pw);
+        if (user != null) {
+            System.out.println("로그인 성공!");
+            return true;
         }
         System.out.println("로그인 실패!");
         return false;
+
     }
 
     // 메뉴 선택 메서드
@@ -171,7 +165,7 @@ public class UserView {
                 case 3:
                     rechargeMenu();
                     break;
-                case 4:
+                case 0:
                     System.out.println("프로그램 종료");
                     return;
             }
@@ -195,7 +189,7 @@ public class UserView {
     private void rechargeMenu() {
         System.out.print("카드번호를 입력하세요: ");
         String cardNumber = sc.next();
-        UserDto user = userService.findUserByCardNumber(cardNumber);
+        UserDto user = userService.findByCardNumber(cardNumber);
         if (user == null) {
             System.out.println("등록되지 않은 카드번호입니다.");
             return;
@@ -226,11 +220,7 @@ public class UserView {
 
     // 카드번호로 UserDto 찾기
     private UserDto findUserByCardNumber(String cardNumber) {
-        for (UserDto user : userList) {
-            if (user.getCardNumber().equals(cardNumber)) {
-                return user;
-            }
-        }
-        return null;
+        return userService.findByCardNumber(cardNumber);
     }
+
 }

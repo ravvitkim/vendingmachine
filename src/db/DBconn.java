@@ -2,6 +2,8 @@ package db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DBconn {
@@ -16,7 +18,6 @@ public class DBconn {
                 String dbPassword = "1111";
                 Class.forName(dbDriver);
                 dbConn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-                // 연결 성공한 경우
                 System.out.println("DB 연결 성공");
             } catch (ClassNotFoundException e) {
                 System.out.println("DB 연결 실패_1");
@@ -29,11 +30,37 @@ public class DBconn {
         return dbConn;
     }
 
-    // DB연결 종료하기
+    // ResultSet 닫기
+    public static void close(ResultSet rs) {
+        try {
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // PreparedStatement 닫기
+    public static void close(PreparedStatement psmt) {
+        try {
+            if (psmt != null) psmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Connection 닫기 (필요시)
+    public static void close(Connection conn) {
+        try {
+            if (conn != null && !conn.isClosed()) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 기존에 사용하던 Connection 닫기 (옵션)
     public static void close() {
         try {
-            if (dbConn != null) {
-                // 연결되어 있다면
+            if (dbConn != null && !dbConn.isClosed()) {
                 dbConn.close();
             }
         } catch (Exception e) {
@@ -41,5 +68,4 @@ public class DBconn {
         }
         dbConn = null;
     }
-
 }

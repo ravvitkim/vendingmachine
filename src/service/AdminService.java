@@ -23,7 +23,7 @@ public class AdminService {
     public void machineMg() {
         //자판기 입력, 수정, 삭제, 조회
         while (true) {
-            System.out.println("1.메뉴등록 2.메뉴수정 3.메뉴삭제 4.메뉴조회");
+            System.out.println("1.메뉴등록 2.메뉴수정 3.메뉴삭제 4.메뉴조회 0.종료");
             int num = sc.nextInt();
             switch (num) {
                 case 1:
@@ -38,6 +38,8 @@ public class AdminService {
                 case 4:
                     MenuFindAllView();
                     break;
+                case 0:
+                    return;
 
             }
         }
@@ -141,7 +143,7 @@ public class AdminService {
     public void userMg() {
         //관리자는 회원 정보를 조회, 검색 (1.조회 2. 검색 3.삭제 4.입력)
         while (true) {
-            System.out.println("1.회원조회 2.회원검색 3.회원삭제 4.회원정보입력");
+            System.out.println("1.회원조회 2.회원검색 3.회원삭제 4.회원정보입력 0.종료");
             int num = sc.nextInt();
             switch (num) {
                 case 1:
@@ -156,6 +158,8 @@ public class AdminService {
                 case 4:
                     UserUpdateView();
                     break;
+                case 5:
+                    return;
 
             }
         }

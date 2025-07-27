@@ -11,7 +11,7 @@ public class DBconn {
         if (dbConn == null) {
             try {
                 String dbDriver = "com.mysql.cj.jdbc.Driver";
-                String dbUrl = "jdbc:mysql://localhost:3306/vmachine_db";
+                String dbUrl = "jdbc:mysql://localhost:3306/vmachine";
                 String dbUser = "root";
                 String dbPassword = "1111";
                 Class.forName(dbDriver);

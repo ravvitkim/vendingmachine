@@ -7,24 +7,33 @@ public class UserDto extends CommonField{
     private String password;
     private String name;
     private String phoneNumber;
-    private String recharge;
     private String cardNumber;
+    private int recharge;
+    private int status;
    
 
     @Override
     public String toString() {
         return "UserDto{" +
                 "u_id='" + u_id + '\'' +
-                "id='" + id + '\'' +
+                ", id='" + id + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", recharge='" + recharge + '\'' +
                 ", cardNumber='" + cardNumber + '\'' +
-                ", signUpDate='" + getSignUpDate() +
+                ", recharge='" + recharge + '\'' +
+                ", signUpDate='" + getSignUpDate() + '\'' +
+                ", status='" + status +
                 '}';
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getU_id() {
         return u_id;
@@ -66,11 +75,11 @@ public class UserDto extends CommonField{
         this.phoneNumber = phoneNumber;
     }
 
-    public String getRecharge() {
+    public int getRecharge() {
         return recharge;
     }
 
-    public void setRecharge(String recharge) {
+    public void setRecharge(int recharge) {
         this.recharge = recharge;
     }
 

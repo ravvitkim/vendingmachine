@@ -115,7 +115,7 @@ public class AdminService {
 
     private void MenuInsertView() {
         System.out.println("메뉴등록페이지");
-        // 멤버를 추가
+
         System.out.println("추가할 메뉴의 이름 : ");
         String name = sc.next();
         System.out.println(name + "의 가격 : ");
@@ -123,6 +123,7 @@ public class AdminService {
         System.out.println(name +"의 재고 : ");
         int stock = sc.nextInt();
         ProductDto dto = new ProductDto();
+
         dto.setP_name(name);
         dto.setPrice(price);
         dto.setStock(stock);
@@ -158,7 +159,7 @@ public class AdminService {
                 case 4:
                     UserUpdateView();
                     break;
-                case 5:
+                case 0:
                     return;
 
             }
